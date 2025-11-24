@@ -1,12 +1,13 @@
 #ifndef SKIPLIST_H
 #include <string>
+#include <vector>
 
 using namespace std;
 
 struct node {
     string song;
     int level;
-    node* next;
+    vector<node*> next; // hold all next pointers in a vector, index corresponds to level + 1
 };
 
 class SkipList {

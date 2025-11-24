@@ -1,5 +1,6 @@
-#include <iostream>
 #include "skiplist.h"
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +13,12 @@ SkipList::~SkipList() {
 }
 
 node* SkipList::create_node(string song) {
-    // TODO
+    node* new_node = new node;
+    new_node->song = song;
+    new_node->level = 1;
+    new_node->next = NULL;
+    new_node->below = NULL;
+    return new_node;
 }
 
 void SkipList::insert_node(node* song_node){
