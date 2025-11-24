@@ -5,9 +5,9 @@
 using namespace std;
 
 struct node {
-    string song;
-    int level;
-    vector<node*> next; // hold all next pointers in a vector, index corresponds to level + 1
+    string song; // combination of artist name and song title
+    int level; // highest level the node occupies
+    vector<node*> next; // hold all next pointers in a vector, index position corresponds to level
 };
 
 class SkipList {
@@ -21,8 +21,11 @@ public:
     // Create new node
     node* create_node(string song);
 
-    // Insert node
-    void insert_node(node* song_node);
+    // Create node to insert
+    void insert_node(string song);
+
+    // Find location to insert create node
+    void insert(node* new_node);
 
     // remove a song from the library
     void remove(string song);
@@ -33,8 +36,23 @@ public:
     // Create randomized playlist of provided length
     string shuffle(int playlist_length);
 
-private:
+    // return the head of the list
+    node* get_head();
 
-}
+    // return the tail of the list
+    node* get_tail();
+
+private:
+    // Randomly determine the highest level the node will occupy by simulating a coin flip
+    // if heads (0) go up a level, if tails (1) stay, returns the highest level reached
+    int find_level();
+
+    node* head;
+    node* tail;
+
+    int size;
+    int max_level;
+
+};
 
 #endif // SKIPLIST_H
