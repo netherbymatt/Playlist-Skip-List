@@ -102,12 +102,67 @@ void SkipList::insert(node* new_node) {
     size++;
 }
 
-void SkipList::remove(string song) {
-    // TODO
+string SkipList::remove(string song) {
+
+    vector<node*> update_list(max_level, nullptr); // add nodes here that might need next references updated
+    
+    int current_level = max_level;
+    node* current_node = head;
+    node* next_node = head->next.at(current_level);
+    node* remove_target = nullptr;
+    
+    while (current_level >= 0) {
+        if (next_node->song > song) {
+            current_level--;
+            if (current_level < 0) {break;} // break if less than zero to avoid out of bounds vector access attempt
+            next_node = current_node->next.at(current_level);
+        }
+        else if (next_node->song < song) {
+            current_node = next_node;
+            next_node = current_node->next.at(current_level);
+        }
+        else if (next_node->song == song) {
+            remove_target = next_node;
+            // transfer next pointer for removed node to the previous node
+            current_node->next.at(current_level) = next_node->next.at(current_level); 
+            current_level--;
+            if (current_level < 0) {break;}
+            next_node = current_node->next.at(current_level);
+        }
+    }
+    
+    if (remove_target != nullptr) {
+        delete remove_target;
+        size--;
+        return song + " has been removed from your library.";
+        
+    }
+    else {
+        return song + " was not found in your library.";
+    }
 }
 
 bool SkipList::search(string song) {
-    // TODO
+
+    int current_level = max_level;
+    node* current_node = head;
+    node* next_node = head->next.at(current_level);
+
+    while (current_level >= 0) {
+        if (next_node->song > song) {
+            current_level--;
+            if (current_level < 0) {break;} // break if less than zero to avoid out of bounds vector access attempt
+            next_node = current_node->next.at(current_level);
+        }
+        else if (next_node->song < song) {
+            current_node = next_node;
+            next_node = current_node->next.at(current_level);
+        }
+        else {return true;} // if not greater than or less we have found our song
+    }
+
+    return false; // song not found
+
 }
 
 string SkipList::shuffle(int playlist_length) {

@@ -33,6 +33,17 @@ int main() {
     string full_list = playList.full_list();
     cout << full_list << endl;
 
+    cout << "Is Blink-182 in the playlist? " << playList.search("Blink-182") << endl;
+    cout << "Is Green Day in the playlist? " << playList.search("Green Day") << endl;
+
+    string remove_nirvana = playList.remove("Nirvana");
+    cout << remove_nirvana << endl;
+    string remove_nanagriz = playList.remove("Nana Griz");
+    cout << remove_nanagriz << endl;
+
+    string full_list2 = playList.full_list();
+    cout << full_list2 << endl;
+
 
     return 0;   
 }

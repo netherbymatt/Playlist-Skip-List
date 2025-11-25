@@ -28,7 +28,7 @@ public:
     void insert(node* new_node);
 
     // remove a song from the library
-    void remove(string song);
+    string remove(string song);
 
     // search to see if a song is in the library
     bool search(string song);
