@@ -42,6 +42,8 @@ public:
     // return the tail of the list
     node* get_tail();
 
+    string full_list();
+
 private:
     // Randomly determine the highest level the node will occupy by simulating a coin flip
     // if heads (0) go up a level, if tails (1) stay, returns the highest level reached

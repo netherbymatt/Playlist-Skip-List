@@ -20,6 +20,10 @@ SkipList::SkipList() {
     head->next.push_back(tail);
     head->next.push_back(tail);
 
+    // tail points to NULL
+    tail->next.push_back(nullptr);
+    tail->next.push_back(nullptr);
+
     // Don't count head and tail nodes towards size of the list
     size = 0;
 }
@@ -37,13 +41,19 @@ node* SkipList::create_node(string song) {
 
 void SkipList::insert_node(string song){
 
-    node* new_node = create_node(song); 
+    node* new_node = create_node(song);
+
+    // initialize next references as NULL
+    for (int i = 0; i <= new_node->level; i++) {
+        new_node->next.push_back(nullptr);
+    }
 
     if (new_node->level > max_level) {  // set head and tail to new max level, update next pointers
         max_level = new_node->level;
         int to_add = max_level - head->level;
         for (int i = 0; i < to_add; i++) {
             head->next.push_back(tail);
+            tail->next.push_back(nullptr);
         }
         head->level = max_level;
         tail->level = max_level;
@@ -59,33 +69,33 @@ void SkipList::insert(node* new_node) {
 
     int current_level = max_level; // begin search at top level head node
     node* current_node = head;
-    node* next_node = current_node->next[current_level];
+    node* next_node = current_node->next.at(current_level);
 
     bool inserted = false;
 
     while (!inserted) {
         while (current_level > 0) {
             if (next_node->song > song) {
-                if (node_level <= current_level) {
-                    current_node->next[current_level] = new_node;
-                    new_node->next.insert(new_node->next.begin(), next_node);
+                if (current_level <= node_level) {
+                    current_node->next.at(current_level) = new_node;
+                    new_node->next.at(current_level) = next_node;
                 }
                 current_level--;
-                next_node = current_node->next[current_level];
+                next_node = current_node->next.at(current_level);
             }
             else {
                 current_node = next_node;
-                next_node = current_node->next[current_level];
+                next_node = current_node->next.at(current_level);
             }
         }
         if (next_node->song > song) {
-            current_node->next[0] = new_node;
-            new_node->next.insert(new_node->next.begin(), next_node);
+            current_node->next.at(0) = new_node;
+            new_node->next.at(0) = next_node;
             inserted = true;
         }
         else {
             current_node = next_node;
-            next_node = current_node->next[current_level];
+            next_node = current_node->next.at(current_level);
         }
        
     }
@@ -102,6 +112,23 @@ bool SkipList::search(string song) {
 
 string SkipList::shuffle(int playlist_length) {
     // TODO
+}
+
+string SkipList::full_list() {
+    int current_level = max_level;
+    node* current_node = head;
+    string list_and_level;
+    while (current_level >= 0) {
+        list_and_level = list_and_level + to_string(current_level);
+        while(current_node != nullptr) {
+            list_and_level = list_and_level + " " + current_node->song;
+            current_node = current_node->next.at(current_level);
+        }
+        list_and_level = list_and_level + "\n";
+        current_level--;
+        current_node = head;
+    }
+    return list_and_level;
 }
 
 int SkipList::find_level() {

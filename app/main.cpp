@@ -16,6 +16,8 @@ int main() {
     node* tail = playList.get_tail();
     cout << "The tail of this playlist is: " << tail->song << endl;
     cout << "The level this node is at is: " << tail->level << endl;
+    cout << "The next node at level 1 is: " << tail->next[1] << endl;
+    cout << "The next node at level 0 is: " << tail->next[0] << endl;
 
     playList.insert_node("Aerosmith");
     playList.insert_node("Blink-182");
@@ -28,13 +30,9 @@ int main() {
     playList.insert_node("Nirvana");
     playList.insert_node("Lucinda Williams");
 
+    string full_list = playList.full_list();
+    cout << full_list << endl;
 
-    node* current_node = head;
-    for (int i = 0; i < 11; i++) {
-        cout << "Song: " << current_node->song << " Level: " << current_node->level << endl;
-        current_node = current_node->next[0];
-    }
-    
 
     return 0;   
 }
