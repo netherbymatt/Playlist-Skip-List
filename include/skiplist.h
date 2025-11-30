@@ -42,7 +42,14 @@ public:
     // return the tail of the list
     node* get_tail();
 
+    // print out all songs in the library and all levels of the skip list
     string full_list();
+
+    // intake artist/song data from txt file and insert into the skip list
+    void txt_input(string file_name);
+
+    // return the number of songs in the library
+    int get_size();
 
 private:
     // Randomly determine the highest level the node will occupy by simulating a coin flip

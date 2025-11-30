@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <random>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -167,6 +169,7 @@ bool SkipList::search(string song) {
 
 string SkipList::shuffle(int playlist_length) {
     // TODO
+    return "";
 }
 
 string SkipList::full_list() {
@@ -209,5 +212,37 @@ node* SkipList::get_head() {
 
 node* SkipList::get_tail() {
     return tail;
+}
+
+void SkipList::txt_input(string file_name) {
+    ifstream file(file_name);
+
+    if(!file.is_open()) {
+        cout << "Unable to open file" << endl;
+    }
+
+    string file_line;  // hold each line of the txt file
+    getline(file, file_name, '\n'); // gets header lines before we begin the loop
+
+    // now begin loop to get each song in the file
+    while (getline(file, file_line, '\n')) {
+        stringstream ss(file_line);  // create ss so we can separate the artist/album/song
+        string artist_line;
+        string artist_song;
+
+        // for each ss separate at the tab
+        while (getline(ss, artist_line, '\t')) {
+            artist_song = artist_song + "---" + artist_line;
+        }
+
+        insert_node(artist_song);
+    }
+
+    file.close();
+
+}
+
+int SkipList::get_size() {
+    return size;
 }
 
