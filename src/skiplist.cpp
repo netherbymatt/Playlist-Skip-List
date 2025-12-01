@@ -144,6 +144,17 @@ string SkipList::remove(string song) {
     }
 }
 
+string SkipList::search_song(string artist, string song) {
+    string artist_song = "---" + artist + "---" + song;
+    cout << artist_song << endl;
+    if (search(artist_song) == true) {
+        return song + " by " + artist + " is in your library.";
+    }
+    else {
+        return song + " by " + artist + " is not in your library.";
+    }
+}
+
 bool SkipList::search(string song) {
 
     int current_level = max_level;

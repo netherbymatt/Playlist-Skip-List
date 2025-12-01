@@ -30,6 +30,10 @@ public:
     // remove a song from the library
     string remove(string song);
 
+    // takes input of artist name and song name, converts to formatting of list and returns
+    // string telling the user if it is in the library
+    string search_song(string artist, string song);
+
     // search to see if a song is in the library
     bool search(string song);
 
