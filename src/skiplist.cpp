@@ -243,6 +243,9 @@ void SkipList::txt_input(string file_name) {
 
         // for each ss separate at the tab
         while (getline(ss, artist_line, '\t')) {
+            for (auto& i : artist_line) {
+                i = tolower(i);  // making all lowercase to allow for search
+            }
             artist_song = artist_song + "---" + artist_line;
         }
 

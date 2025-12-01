@@ -24,8 +24,8 @@ int main() {
 
     SkipList playList;
     playList.txt_input("../full_library.txt");
-    cout << playList.search_song("Geese", "Cobra") << endl;
-    cout << playList.search_song("\"Black Country, New Road\"", "Concorde") << endl;
+    cout << playList.search_song("geese", "cobra") << endl;
+    cout << playList.search_song("\"black country, new road\"", "concorde") << endl;
 
     node* cursor = playList.get_head();
     for (int i = 0; i < 10; i++) {
