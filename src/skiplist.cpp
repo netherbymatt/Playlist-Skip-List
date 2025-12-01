@@ -110,7 +110,7 @@ void SkipList::insert(node* new_node) {
     size++;
 }
 
-string SkipList::remove(string song) {
+bool SkipList::remove(string song) {
 
     vector<node*> update_list(max_level, nullptr); // add nodes here that might need next references updated
     
@@ -142,23 +142,16 @@ string SkipList::remove(string song) {
     if (remove_target != nullptr) {
         delete remove_target;
         size--;
-        return song + " has been removed from your library.";
+        return true;
         
     }
     else {
-        return song + " was not found in your library.";
+        return false;
     }
 }
 
-string SkipList::search_song(string artist, string song) {
-    string artist_song = "---" + artist + "---" + song;
-    cout << artist_song << endl;
-    if (search(artist_song) == true) {
-        return song + " by " + artist + " is in your library.";
-    }
-    else {
-        return song + " by " + artist + " is not in your library.";
-    }
+string SkipList::song_format(string artist, string song) {
+    return "---" + artist + "---" + song;
 }
 
 bool SkipList::search(string song) {
@@ -185,7 +178,35 @@ bool SkipList::search(string song) {
 }
 
 string SkipList::shuffle(int playlist_length) {
-    // TODO
+    
+    random_device rand_seed;
+
+    mt19937 gen(rand_seed());
+    uniform_int_distribution<> distrib(0, size);
+
+    vector<int> shuffle_positions;
+    int rand_pos;
+
+    for (int i = 0; i < playlist_length; i++) {
+        rand_pos = distrib(gen);
+        shuffle_positions.push_back(rand_pos);
+    }
+
+    vector<string> shuffle_list;
+    for (int i = 0; i < playlist_length; i++) {
+        node* current_node = head;
+        int counter = 0;
+        while(counter < shuffle_positions.at(i)) {
+            current_node = current_node->next.at(0);
+            counter++;
+        }
+        shuffle_list.push_back(current_node->song);
+    }
+
+    for (int i = 0; i < shuffle_list.size(); i++) {
+        cout << shuffle_list.at(i) << endl;
+    }
+
     return "";
 }
 

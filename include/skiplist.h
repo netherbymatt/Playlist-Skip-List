@@ -24,15 +24,15 @@ public:
     // Create node to insert
     void insert_node(string song);
 
-    // Find location to insert create node
+    // Find location to insert created node
     void insert(node* new_node);
 
-    // remove a song from the library
-    string remove(string song);
+    // remove a song from the library, if song is found and removed return true, if not found return false
+    bool remove(string song);
 
     // takes input of artist name and song name, converts to formatting of list and returns
-    // string telling the user if it is in the library
-    string search_song(string artist, string song);
+    // string that can be used in the list
+    string song_format(string artist, string song);
 
     // search to see if a song is in the library
     bool search(string song);
