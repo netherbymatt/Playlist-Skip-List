@@ -31,7 +31,13 @@ SkipList::SkipList() {
 }
 
 SkipList::~SkipList() {
-    // TODO
+    node* cursor = head;
+    while(cursor != nullptr) {
+        // go through each node at the bottom level of the list to free up space
+        node* next = cursor->next.at(0);
+        delete cursor;
+        cursor = next;
+    }
 }
 
 node* SkipList::create_node(string song) {
@@ -249,6 +255,10 @@ void SkipList::txt_input(string file_name) {
             artist_song = artist_song + "---" + artist_line;
         }
 
+        // remove whitespace at beginning and end of song info and then insert into skip list
+        int first_pos = artist_song.find_first_not_of(" ");
+        int last_pos = artist_song.find_last_not_of(" ");
+        artist_song = artist_song.substr(first_pos, last_pos);
         insert_node(artist_song);
     }
 

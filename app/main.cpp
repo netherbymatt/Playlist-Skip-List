@@ -1,5 +1,6 @@
 #include <iostream>
 #include "skiplist.h"
+#include <cctype>
 
 using namespace std;
 
@@ -32,6 +33,14 @@ int main() {
         cursor = cursor->next.at(0);
         cout << cursor->song << endl;
     }
+
+    int w_space = 0;
+    for (int i = 0; i < cursor->song.length(); i++) {
+        if (isspace(cursor->song.at(i))) {w_space++;}
+    }
+    cout << "Number of white spaces in " << cursor->song << " is " << w_space << endl;
+
+    cout << "Max Level for this skip list is: " << playList.get_head()->level << endl;
 
     return 0;  
 }
