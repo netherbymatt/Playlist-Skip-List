@@ -1,11 +1,10 @@
 #include "skiplist.h"
 #include <iostream>
-#include <vector>
-#include <string>
 #include <random>
 #include <fstream>
 #include <sstream>
 #include <set>
+#include <cctype>
 
 using namespace std;
 

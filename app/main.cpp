@@ -1,6 +1,5 @@
 #include <iostream>
 #include "skiplist.h"
-#include <cctype>
 
 using namespace std;
 
