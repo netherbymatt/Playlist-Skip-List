@@ -1,4 +1,4 @@
-# Skip List Data Structure with Playlist Demo
+## Skip List Data Structure with Playlist Demo
 
 ### Introduction
 A skip list is an enhancement of an ordered linked list data structure that allows for faster search, deletion, and insertion operations. It builds on the standard linked list by adding additional "levels" of nodes which create something akin to an expressway when searching through the structure. The bottom level consists of every node in the linked list ( in the case of this implementation they are ordered alphabetically) and every level above that contains fewer and fewer nodes. When each node is inserted it is randomly assigned the number of levels it will occupy based on a coin flip - this makes it so as you go up towards the topmost level the list gets sparser with bigger gaps between nodes. This is what creates the faster lookup times - you start at the topmost level and look at the next node at that level - if it is less than your search target you go to that node and "skip" all of the nodes that come before it. Instead of looking at each node individually you go level by level. If the next node is greater than your search target you go down a level and look at the next node there. At each level you are skipping over more and more nodes until you get to the target node. In the case of this program I have designed it to take an input of a music library to allow for quick insertion, deletion, search, and the ability to create a shuffled playlist. 
@@ -25,6 +25,7 @@ For my implementation I have opted to have the order be determined by a combinat
 
 ### File Structure
 ### Installation/Setup
+To test out the program 
 ### Usage
 ### Application Demo
 ### Testing

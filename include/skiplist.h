@@ -38,7 +38,7 @@ public:
     bool search(string song);
 
     // Create randomized playlist of provided length
-    string shuffle(int playlist_length);
+    void shuffle(int playlist_length);
 
     // return the head of the list
     node* get_head();
@@ -46,8 +46,8 @@ public:
     // return the tail of the list
     node* get_tail();
 
-    // print out all songs in the library and all levels of the skip list
-    string full_list();
+    // print out 10 entries in the skiplist to show structure
+    string list_snapshot();
 
     // intake artist/song data from txt file and insert into the skip list
     void txt_input(string file_name);

@@ -5,6 +5,7 @@
 #include <random>
 #include <fstream>
 #include <sstream>
+#include <set>
 
 using namespace std;
 
@@ -151,7 +152,7 @@ bool SkipList::remove(string song) {
 }
 
 string SkipList::song_format(string artist, string song) {
-    return "---" + artist + "---" + song;
+    return artist + "---" + song;
 }
 
 bool SkipList::search(string song) {
@@ -177,52 +178,64 @@ bool SkipList::search(string song) {
 
 }
 
-string SkipList::shuffle(int playlist_length) {
+void SkipList::shuffle(int playlist_length) {
     
     random_device rand_seed;
 
     mt19937 gen(rand_seed());
-    uniform_int_distribution<> distrib(0, size);
+    uniform_int_distribution<> distrib(1, size); // start at 1 to exclude head node
 
-    vector<int> shuffle_positions;
+    set<int> shuffle_positions; // set to make sure no duplicate elements are added
     int rand_pos;
 
-    for (int i = 0; i < playlist_length; i++) {
+    while (shuffle_positions.size() < playlist_length) {  // add random positions until we get to playlist size
         rand_pos = distrib(gen);
-        shuffle_positions.push_back(rand_pos);
+        shuffle_positions.insert(rand_pos);
     }
 
-    vector<string> shuffle_list;
-    for (int i = 0; i < playlist_length; i++) {
-        node* current_node = head;
-        int counter = 0;
-        while(counter < shuffle_positions.at(i)) {
+    node* current_node = head;
+    int pos = 0;
+    int song_num = 1;
+
+    // go through each element of the set, travel to that position in the list and output the song
+    for (auto next_pos = shuffle_positions.begin(); next_pos != shuffle_positions.end(); next_pos++) {
+        for (int i = pos; i < *next_pos; i++) {
             current_node = current_node->next.at(0);
-            counter++;
         }
-        shuffle_list.push_back(current_node->song);
+        cout << song_num << ". " << current_node->song << endl;
+        pos = *next_pos;
+        song_num++;
     }
-
-    for (int i = 0; i < shuffle_list.size(); i++) {
-        cout << shuffle_list.at(i) << endl;
-    }
-
-    return "";
 }
 
-string SkipList::full_list() {
+string SkipList::list_snapshot() {
     int current_level = max_level;
     node* current_node = head;
     string list_and_level;
-    while (current_level >= 0) {
-        list_and_level = list_and_level + to_string(current_level);
-        while(current_node != nullptr) {
-            list_and_level = list_and_level + " " + current_node->song;
-            current_node = current_node->next.at(current_level);
+    if (size <= 10) {
+        while (current_level >= 0) {
+            list_and_level = list_and_level + to_string(current_level);
+            while(current_node != nullptr) {
+                list_and_level = list_and_level + " " + current_node->song;
+                current_node = current_node->next.at(current_level);
+            }
+            list_and_level = list_and_level + "\n";
+            current_level--;
+            current_node = head;
         }
-        list_and_level = list_and_level + "\n";
-        current_level--;
-        current_node = head;
+    }
+    else {
+        while (current_level >= 0) {
+            list_and_level = list_and_level + to_string(current_level);
+            for (int i = 0; i < 10; i++) {
+                list_and_level = list_and_level + " " + current_node->song;
+                current_node = current_node->next.at(current_level);
+                if (current_node->song == "~~~End of List") {break;} // stop if at tail node
+            }
+            list_and_level = list_and_level + "\n";
+            current_level--;
+            current_node = head;
+        }
     }
     return list_and_level;
 }
@@ -264,22 +277,30 @@ void SkipList::txt_input(string file_name) {
 
     // now begin loop to get each song in the file
     while (getline(file, file_line, '\n')) {
-        stringstream ss(file_line);  // create ss so we can separate the artist/album/song
+        stringstream ss(file_line);  // create ss so we can separate the artist/song
         string artist_line;
         string artist_song;
-
-        // for each ss separate at the tab
-        while (getline(ss, artist_line, '\t')) {
-            for (auto& i : artist_line) {
+    
+        getline(ss, artist_line, '\t'); // extract artist from the stringstream
+        for (auto& i : artist_line) {
                 i = tolower(i);  // making all lowercase to allow for search
             }
-            artist_song = artist_song + "---" + artist_line;
-        }
+
+        artist_song = artist_line;
+        artist_song += "---";  // add between artist and song name for list formatting
+
+        getline(ss, artist_line, '\t'); // extract song from the stringstream
+        for (auto& i : artist_line) {
+                i = tolower(i);  
+            }
+
+        artist_song += artist_line;
 
         // remove whitespace at beginning and end of song info and then insert into skip list
         int first_pos = artist_song.find_first_not_of(" ");
         int last_pos = artist_song.find_last_not_of(" ");
         artist_song = artist_song.substr(first_pos, last_pos);
+
         insert_node(artist_song);
     }
 
