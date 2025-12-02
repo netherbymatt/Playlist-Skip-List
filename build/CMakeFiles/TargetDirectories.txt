@@ -1,3 +1,0 @@
-/Users/matthewnetherby/Documents/University of Colorado/Data Structures/Playlist-Skip-List/build/CMakeFiles/hello.dir
-/Users/matthewnetherby/Documents/University of Colorado/Data Structures/Playlist-Skip-List/build/CMakeFiles/edit_cache.dir
-/Users/matthewnetherby/Documents/University of Colorado/Data Structures/Playlist-Skip-List/build/CMakeFiles/rebuild_cache.dir
