@@ -82,26 +82,27 @@ void SkipList::insert(node* new_node) {
     bool inserted = false;
 
     while (!inserted) {
-        while (current_level > 0) {
-            if (next_node->song > song) {
-                if (current_level <= node_level) {
+        while (current_level > 0) { 
+            if (next_node->song > song) { 
+                if (current_level <= node_level) {  // capture next pointer if new node occupies this level
                     current_node->next.at(current_level) = new_node;
                     new_node->next.at(current_level) = next_node;
                 }
-                current_level--;
+                current_level--; // go down a level and compare the next node at that level
                 next_node = current_node->next.at(current_level);
             }
             else {
-                current_node = next_node;
+                current_node = next_node;  
                 next_node = current_node->next.at(current_level);
             }
         }
-        if (next_node->song > song) {
+        // once down at the bottom level we are comparing song by song until we insert
+        if (next_node->song > song) { // if next song is greater we have found the correct position
             current_node->next.at(0) = new_node;
             new_node->next.at(0) = next_node;
             inserted = true;
         }
-        else {
+        else { // if the new song is greater we need to go node by node to find the position
             current_node = next_node;
             next_node = current_node->next.at(current_level);
         }
@@ -112,8 +113,6 @@ void SkipList::insert(node* new_node) {
 
 bool SkipList::remove(string song) {
 
-    vector<node*> update_list(max_level, nullptr); // add nodes here that might need next references updated
-    
     int current_level = max_level;
     node* current_node = head;
     node* next_node = head->next.at(current_level);
@@ -133,8 +132,8 @@ bool SkipList::remove(string song) {
             remove_target = next_node;
             // transfer next pointer for removed node to the previous node
             current_node->next.at(current_level) = next_node->next.at(current_level); 
-            current_level--;
-            if (current_level < 0) {break;}
+            current_level--;  // go down a level and repeat this procedure to update all next pointers
+            if (current_level < 0) {break;}  // break if less than zero at which point all next pointer will have been updated
             next_node = current_node->next.at(current_level);
         }
     }
@@ -181,14 +180,14 @@ string SkipList::shuffle(int playlist_length) {
     
     random_device rand_seed;
 
-    mt19937 gen(rand_seed());
-    uniform_int_distribution<> distrib(1, size); // start at 1 to exclude head node
+    mt19937 generator(rand_seed());
+    uniform_int_distribution<> rand_range(1, size); // start at 1 to exclude head node
 
     set<int> shuffle_positions; // set to make sure no duplicate elements are added
     int rand_pos;
 
     while (shuffle_positions.size() < playlist_length) {  // add random positions until we get to playlist size
-        rand_pos = distrib(gen);
+        rand_pos = rand_range(generator);
         shuffle_positions.insert(rand_pos);
     }
 
@@ -246,12 +245,13 @@ int SkipList::find_level() {
 
     random_device rand_seed;  // different seed each time the function is called
 
-    mt19937 gen(rand_seed());
-    uniform_int_distribution<> distrib(0,1);
-    int flip = distrib(gen); // initial "coin flip", will return either 0 (heads) or 1 (tails)
+    mt19937 generator(rand_seed());  // use random device seed with mt199937 generating the number
+    uniform_int_distribution<> rand_range(0,1); // range for the coin flip, 0 is "heads", 1 is "tails"
+
+    int flip = rand_range(generator); // initial "coin flip"
 
     while (flip == 0 && level <= LEVEL_CAP) {  // simulate coin flip until we get tails
-        flip = distrib(gen);
+        flip = rand_range(generator);
         level++;
     }
 
