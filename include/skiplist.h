@@ -38,7 +38,7 @@ public:
     bool search(string song);
 
     // Create randomized playlist of provided length
-    void shuffle(int playlist_length);
+    string shuffle(int playlist_length);
 
     // return the head of the list
     node* get_head();
@@ -57,14 +57,19 @@ public:
 
 private:
     // Randomly determine the highest level the node will occupy by simulating a coin flip
-    // if heads (0) go up a level, if tails (1) stay, returns the highest level reached
+    // if heads (0) go up a level, if tails (1) stay, returns the highest level reached up to the level cap
     int find_level();
 
+    // pointers to the head and tail of list
     node* head;
     node* tail;
 
+    // current size, current max level in the skip list
     int size;
     int max_level;
+
+    // capping list at 12 levels
+    const int LEVEL_CAP = 12; 
 
 };
 

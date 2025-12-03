@@ -37,7 +37,7 @@ This implementation creates one node per song with the key being a combination o
 | Remove       |   O(log n)      | O(n)          |
 | Shuffle      |   O(n)          | O(n)          |
 
-This implementation uses a probabilistic method to determine the node levels, which should lead to O(log n) time complexity for most operations. The worst case occurs if every node is promoted to the max level or no node is promoted past the bottom level - leaving the algorithm to have to search through each node. The shuffle functionality I implemented is unfortunately O(n) as it has to search through the full bottom level when pulling the songs for its created playlist. 
+This implementation uses a probabilistic method to determine the node levels, which should lead to O(log n) time complexity for most operations. The worst case occurs if every node is promoted to the max level or no node is promoted past the bottom level - leaving the operation to have to search through each node. The shuffle functionality I implemented is unfortunately O(n) as it has to search through the full bottom level when pulling the songs for its created playlist. 
 
 The space complexity has an average case of O(n) and worst case of O(n log n) which occurs if every node is promoted to the max level. 
 

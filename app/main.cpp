@@ -1,5 +1,5 @@
 #include <iostream>
-#include "skiplist.h"
+#include "../include/skiplist.h"
 
 using namespace std;
 
@@ -93,7 +93,8 @@ int main() {
             cout << "How many songs do you want to be in the playlist? ";
             int playlist_length;
             cin >> playlist_length;
-            playlist.shuffle(playlist_length);
+            string shuffle_playlist = playlist.shuffle(playlist_length);
+            cout << shuffle_playlist;
         }
 
         else if (selection == 6) {  // return stats on your library

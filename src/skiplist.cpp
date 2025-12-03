@@ -1,4 +1,4 @@
-#include "skiplist.h"
+#include "../include/skiplist.h"
 #include <iostream>
 #include <random>
 #include <fstream>
@@ -177,7 +177,7 @@ bool SkipList::search(string song) {
 
 }
 
-void SkipList::shuffle(int playlist_length) {
+string SkipList::shuffle(int playlist_length) {
     
     random_device rand_seed;
 
@@ -195,16 +195,18 @@ void SkipList::shuffle(int playlist_length) {
     node* current_node = head;
     int pos = 0;
     int song_num = 1;
+    string shuffle_playlist;
 
     // go through each element of the set, travel to that position in the list and output the song
     for (auto next_pos = shuffle_positions.begin(); next_pos != shuffle_positions.end(); next_pos++) {
         for (int i = pos; i < *next_pos; i++) {
             current_node = current_node->next.at(0);
         }
-        cout << song_num << ". " << current_node->song << endl;
+        shuffle_playlist = shuffle_playlist + to_string(song_num) + ". " + current_node->song + "\n";
         pos = *next_pos;
         song_num++;
     }
+    return shuffle_playlist;
 }
 
 string SkipList::list_snapshot() {
@@ -248,7 +250,7 @@ int SkipList::find_level() {
     uniform_int_distribution<> distrib(0,1);
     int flip = distrib(gen); // initial "coin flip", will return either 0 (heads) or 1 (tails)
 
-    while (flip == 0) {  // simulate coin flip until we get tails
+    while (flip == 0 && level <= LEVEL_CAP) {  // simulate coin flip until we get tails
         flip = distrib(gen);
         level++;
     }

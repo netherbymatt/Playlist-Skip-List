@@ -5,5 +5,9 @@ project(Playlist-Skip-List VERSION 1.0
         LANGUAGES CXX)
 
 add_executable(main app/main.cpp src/skiplist.cpp)
+add_executable(tests tests/skiplist_test.cpp src/skiplist.cpp)
 
 target_include_directories(main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+
+
