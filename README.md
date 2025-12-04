@@ -63,7 +63,7 @@ To test out the program follow these steps in the terminal after cloning the rep
 
 Once the ./main executable is run you can upload a .txt file or start adding songs manually. If you have multiple files with songs on it you could add them individually to compile into one library. I would consider the shuffle the main draw, so once the library is uploaded you can start generating different playlists.
 
-Here is a link to a demo of the program that I ran through: https://www.youtube.com/watch?v=8iih8kkqre8 
+Here is a link to a demo of the program that I ran through: https://www.youtube.com/watch?v=8iih8kkqre8  
 I highlight some of the specific implementation details and then upload my own library to create a shuffled playlist. 
 
 ### Testing
