@@ -55,6 +55,8 @@ public:
     // return the number of songs in the library
     int get_size();
 
+    
+
 private:
     // Randomly determine the highest level the node will occupy by simulating a coin flip
     // if heads (0) go up a level, if tails (1) stay, returns the highest level reached up to the level cap

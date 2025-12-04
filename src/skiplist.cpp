@@ -51,7 +51,7 @@ void SkipList::insert_node(string song){
 
     node* new_node = create_node(song);
 
-    // initialize next references as NULL
+    // initialize next references as NULL, add 1 to size of each level node is added to
     for (int i = 0; i <= new_node->level; i++) {
         new_node->next.push_back(nullptr);
     }
@@ -312,4 +312,5 @@ void SkipList::txt_input(string file_name) {
 int SkipList::get_size() {
     return size;
 }
+
 

@@ -102,7 +102,7 @@ int main() {
 
         else if (selection == 6) {  // return stats on your library
             int library_size = playlist.get_size();
-            int num_levels = playlist.get_head()->level;
+            int num_levels = playlist.get_head()->level + 1;
             cout << "You have " << library_size << " song(s) in your library." << endl;
             cout << "This skip list has " << num_levels << " levels in it." << endl;
         }
