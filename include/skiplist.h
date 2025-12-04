@@ -34,7 +34,7 @@ public:
     // string that can be used in the list
     string song_format(string artist, string song);
 
-    // search to see if a song is in the library
+    // search to see if a song is in the library, return true if found, false otherwise
     bool search(string song);
 
     // Create randomized playlist of provided length
@@ -46,10 +46,10 @@ public:
     // return the tail of the list
     node* get_tail();
 
-    // print out 10 entries in the skiplist to show structure
+    // print out 10 entries in the skiplist to show structure, using testing files
     string list_snapshot();
 
-    // intake artist/song data from txt file and insert into the skip list
+    // intake artist/song data from .txt file and insert into the skip list
     void txt_input(string file_name);
 
     // return the number of songs in the library
