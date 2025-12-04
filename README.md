@@ -2,7 +2,7 @@
 
 ### Data Structure Overview
 
-A skip list is a variation on an ordered linked list that allows for faster search, removal, and insertion operations. It builds on the standard linked list by adding additional "levels" of nodes, creating something akin to an expressway when searching through the structure. The bottom level consists of every node in the linked list and every level above that contains fewer and fewer nodes. When each item is inserted it is randomly assigned the number of levels it will occupy - making it so as you go up in levels the list gets sparser with bigger gaps between nodes. This is what creates the faster lookup times - you start at the topmost level and look at the next node - if it is less than your search target you go to that node and "skip" all of those that come before it in lower levels. If the next node is greater than your search target you go down a level and continue this process until you reach the target location.
+A skip list is a variation on an ordered linked list that allows for faster search, removal, and insertion operations. It builds on the standard linked list by adding additional "levels" of nodes, creating something akin to an expressway when searching through the structure. The bottom level consists of every node in the linked list and every level above that contains contains about half of the nodes of the level below it. When each item is inserted it is randomly assigned the number of levels it will occupy - making it so as you go up in levels the list gets sparser with bigger gaps between nodes. This is what creates the faster lookup times - you start at the topmost level and look at the next node - if it is less than your search target you go to that node and "skip" all of those that come before it in lower levels. If the next node is greater than your search target you go down a level and continue this process until you reach the target location.
 
 ### Implementation Details
 
@@ -21,7 +21,7 @@ Each node in the skip list contains the following items:
 
 - find_level: private member function called when a new node is created. Does a "coin flip" to determine the number of levels a node will occupy. Randomly selects either 0 (heads) or 1 (tails). If heads is rolled it goes again and increments the level (up to the level cap), if tails is rolled it stops flipping and returns the level. 
 
-- remove: Similar functionality to insert, searches for the target node and once it is found deletes the node and updates the next pointers that referenced it. Returns true is a node is found and removed, false otherwise.
+- remove: Similar functionality to insert, searches for the target node and once it is found deletes the node and updates the next pointers that referenced it. Returns true if a node is found and removed, false otherwise.
 
 - search: Similar logic to insert and remove to look through the list, starting at the max level and descending when encountering a next node greater than the search value. Returns true if the node is found and false otherwise. 
 
@@ -38,7 +38,7 @@ Each node in the skip list contains the following items:
 | Remove       |   O(log n)      | O(n)          |
 | Shuffle      |   O(n)          | O(n)          |
 
-This implementation uses a probabilistic method to determine the node levels, which should lead to O(log n) time complexity for most operations. The worst case occurs if every node is promoted to the max level or no node is promoted past the bottom level - leaving the operation to have to search through each node. The shuffle functionality I implemented is unfortunately O(n) as it has to search through the full bottom level when pulling the songs for its created playlist. 
+This implementation uses a probabilistic method to determine the node levels, which should lead to O(log n) time complexity for most operations. The worst case occurs if every node is promoted to the max level or no node is promoted past the bottom level - leaving the operation to have to search through each node. The shuffle functionality I implemented is unfortunately O(n) as it has to search through the full bottom level when pulling the songs for its playlist. 
 
 The space complexity has an average case of O(n) and worst case of O(n log n) which occurs if every node is promoted to the max level. 
 
@@ -49,10 +49,11 @@ The space complexity has an average case of O(n) and worst case of O(n log n) wh
 /include - holds skiplist.cpp  
 /src - holds skiplist.h  
 /tests - holds skiplist_test.cpp and a test_library.txt file
+full_library.txt - my liked songs library is included and can be used to demo
 
 ### Installation/Setup
 
-To test out the program follow these steps in the terminal:
+To test out the program follow these steps in the terminal after cloning the repository:
 1. cd ./build
 2. cmake ..
 3. make
@@ -60,9 +61,10 @@ To test out the program follow these steps in the terminal:
 
 ### Usage/Demo
 
-Once the ./main executable is run you can upload a .txt file or start adding songs manually. A typical use case for the application could follow the below steps:
+Once the ./main executable is run you can upload a .txt file or start adding songs manually. If you have multiple files with songs on it you could add them individually to compile into one library. I would consider the shuffle the main draw, so once the library is uploaded you can start generating different playlists.
 
-1. Select option 1 and enter a .txt file of artists and songs (full_library.txt has been included in the documents as an option to demo)
+Here is a link to a demo of the program that I ran through: https://www.youtube.com/watch?v=8iih8kkqre8 
+I highlight some of the specific implementation details and then upload my own library to create a shuffled playlist. 
 
 ### Testing
 
@@ -75,6 +77,8 @@ Additional testing can be done in the ./main executable - entering a new library
 - Improve the shuffle functionality: Currently this is the least efficient operation as it just searches for the nth element at the lowest level of the list. Making the list indexable is one possible solution, but as the list is not static that introduces further considerations when inserting new songs or deleting existing ones.
 
 - Improve the file intake process: Currently only taking .txt files with an artist and song field - this is very rigid and could be further improved to accept other file types and different formatting. 
+
+- Create a visualization of the library: Would be nice to see the songs that are in the library and not just those that are added to a playlist. Probably would need to expand from the terminal to effectively implement this. 
 
 ### References
 
